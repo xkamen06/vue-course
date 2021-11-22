@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Course Goals</h1>
+    </header>
+    <section id="user-goals">
+      <h2>My course goals</h2>
+      <input type="text" v-model="enteredGoalValue"/>
+      <button @click="addGoal">Add Goal</button>
+      <!-- v-if neni jen o skryvani a zobrazovani elementu ale o tom ze se element ani neprida do DOMu! -->
+      <p v-if="goals.length === 0">No goals have been added yet - please start adding some!</p>
+      <!-- <ul v-if="goals.length > 0"> -->
+      <!-- Toto lze udelat lepe a nemusime opakovat podminku - staci v-else  -->
+      <ul v-else>
+      <!-- <p></p> -->
+      <!-- Nesmi vsak mezi elementy obsahujiciimi v-if a v-else zadny dalsi element jako treba <p> </p> -->
+        <!-- <li v-for="goal in goals"> -->
+        <!-- Timto zpusobem muzeme pouzit i index toto goalu - jako v php $i => $item -->
+        <li v-for="(goal, i) in goals" @click="removeGoal(i)" :key="goal">
+          <b>
+            {{ goal }} - {{ i}}
+          </b>
+          <br>
+          <!-- Tu nam ted vadi ze kdyz klikneme do inputu tak se zrusi cely element tim @click - to se resi pomoci @click.stop -->
+          <!-- Je zde ale problem - pokud vytvorim 2 goals tedy 2 li a do obou neco vepisu a prvni smazu tak Vue ten prvni pouzije a vepise do nej 
+          obsah toho druheho a ten druhy smaze ...ale tim ze tam je to stop tak v tom druhem elementu je obsah inputu toho prvniho - je to dano tim ze Vue
+          znovupouziva elementy - a toto je dano tim ze ty li nejsou nijak unikatni -->
+          <!-- Toto resi Vue prvek elementu s nazvem key - pak je kazdy li unikatni v ramci ul (plati i pro jine elementy) - zde pouzijeme goal z v-for 
+            (index i se porad meni - goal je stabilni) -->
+          <!-- :key bychom meli pridavat u v-for temer vzdy !!! -->
+          <input type="text" @click.stop>
+        </li>
+        <!-- {{ goal}} musi byt pouzito uvnitr elementu ktery obsahuje prislusne v-for -->
+        <!-- Muze to byt v jakemkoliv zanorenem elementu - tady v <b></b> -->
+        <!-- Kdyz pridame novy goal tak v-for prida do ul jen jeden novy li a neprekresluje to cele - takze je to optimalni -->
+      </ul>
+
+      <ul>
+        <!-- Muzeme prochazet nejen pole ale i atributy objektu -->
+        <!-- <li v-for="value in {name: 'Max', age: 33}"> -->
+        <!-- Zase muzeme mit i index - zde to bude name a age a potom muzemem pridat index dalsi ktery bude klasicke pocitadlo pozice atributu -->
+        <li v-for="(value, index, index2) in {name: 'Max', age: 33}">
+          {{ index }}: {{ value }} - {{ index2 }}
+        </li>
+      </ul>
+
+
+      <ul>
+        <!-- Muzeme prochazet i cisla v nejakem rozsahu - vypise to 1, 2, 3, 4, ... -->
+        <li v-for="num in 10">
+          {{ num }}
+        </li>
+      </ul>
+
+
+      <!-- Lze i v-else-if="...." -->
+
+      <!-- Misto v-if v-else atd ... lze take pouzit v-show -->
+      <!-- jenze v-show pouze skryva elementy ale v DOMu jsou porad!! pouziva jen css -->
+      <!-- v-show potrebuje podminku vzdy jako v-if -->
+      <!-- Kdyz mame element jehoz viditelnost se meni velmi casto tak pro optimalizaci je lepsi pouzit v-show ale jinak pouzivame v-if -->
+    </section>
+  </body>
+</html>

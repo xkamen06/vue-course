@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+      <!-- Lze misto v-on:click pouzit @click a lze pouzivat i modifikatory jako @click.right -->
+      <!-- Lze misto v-bind:value="..." pouzit :value="..." -->
+      <!-- v-model nema zkratku -->
+      <button @click="add(10)">Add 10</button>
+      <button v-on:click="reduce(5)">Subtract 5</button>
+      <p>Result: {{ counter }}</p>
+      <!-- Ten bind tu mame pro, ze kdyz se resetne input tak aby se vyprazdnil i input -->
+      <!-- Zbytecne tam bindujeme value jako name a zaroven cekame az tam nekdo neco napise a tim nastavime zase to value -->
+      <!-- <input type="text" v-bind:value="name" v-on:input="setName($event, 'Kamensky')"> -->
+      <!-- K tomu se pouziva v-model coz je zkratka pro v-bind a v-on:input - two way binding -->
+
+      <!-- Pokud mame takhle name a lastname a z nich se ma skladat fullname tak v pripade watchers potrebujeme dva watchery coz neni idealni -->
+      <input type="text" v-model="name">
+      <input type="text" v-model="lastname">
+      <button v-on:click="resetInput">Reset Input</button>
+      
+      <!-- Toto neni idealni protoze Vue tuto funkci provola vzdy pri nejake zmene, i treba kdyz klikneme na Add 10 - tim to snizuje vykonnost -->
+      <!-- Z tohoto duvodu neni idealni pozuzivat methods pro vypisovani nejake hodnoty -->
+      <!-- <p>Your Name: {{ outputFullname() }}</p> -->
+      
+      <!-- Toto je trochu lepsi ale furt nic moc protoze je logika v html -->
+      <!-- <p>Your Name: {{ name + ' ' + 'Kamensky' }}</p> -->
+
+      <!-- Proto se pouzivaji COMPUTED properties - vypadaji jako metody ale pouzivaji se jako properties -->
+      <!-- methods tedy pouzivat jen kdyz chceme fakt provadet metodu pri kazde zmene stranky a nebo pro eventy -->
+      <p>Your Name: {{ fullname }}</p>
+      <!-- kdybycom zavolali fullname() tak je to metoda z methods a kdyz fullname tak bud property z data nebo z computed -->
+    </section>
+  </body>
+</html>

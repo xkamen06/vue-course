@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+      <button v-on:click="add(1)">Add</button>
+      <button v-on:click="add(5)">Add 5</button>
+      <!-- Neni potreba davat zavorky za volani metody z methods () -->
+      <!-- Modifikator eventu pro right ..pouze pravym tlacitkem mysi (jde left, right, middle) a prevent aby se neobjevovala nabidka na strance po kliknuti pravym -->
+      <button v-on:click.right.prevent="reduce">Reduce</button>
+      <!-- Nebude menit hodnotu pocitadla v tomto elementu ale necha puvodni -->
+      <p v-once>Starting value: {{ counter }}</p>
+      <p>Result: {{ counter }}</p>
+      
+      <!-- Zde nesmi byt volani metody s () protoze se pouziva event !!! -->
+      <input type="text" v-on:input="setName" v-on:keyup.enter="confirmName">
+      <!-- Nebo by to slo udelat tak ze se muze pouzit () ale musi se predat $event -->
+      <!-- <input type="text" v-on:input="setName($event)" v-on:keyup.enter="confirmName"> -->
+      <br><br>
+      <!-- Pokud chceme do metody poslat vlastni argument tak musime to cele udelat takto -->
+      <input type="text" v-on:input="setNameWithLastname($event, 'Kamensky')">
+      <p>Your name: {{ name }}</p>
+      <!-- Chceme aby se jmeno vypsalo jen stiskne enter (z prvniho inputu) a tak pridame na input dalsi event listener a zaroven modifikator pro enter -->
+      <p>Your confirmed name: {{ confirmedName }}</p>
+
+      <!-- Zde nam vadi ze po kliknuti na button se rerendruje cela html stranka a tim ztratime data na strance -->
+      <!-- Aby se to nedelo tak pouzijeme event on submit a v metode dame prevent default a tim zabranime defualtnimu chovani browseru pro formular a submit -->
+      <!-- Nebo to udelame hezci cestou s pouzitim Vue.js a s modifikatory eventu - zde konkretne .prevent -->
+      <form v-on:submit.prevent="submitForm">
+        <input type="text">
+        <button>Sign Up</button>
+      </form>
+    </section>
+  </body>
+</html>

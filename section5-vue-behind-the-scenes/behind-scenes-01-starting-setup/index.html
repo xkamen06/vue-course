@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Behind The Scenes</h1>
+    </header>
+    <!-- Template prvni app -->
+    <section id="app">
+      <h2>How Vue Works</h2>
+      <!-- *********** REFS *********** -->
+      <!-- <input type="text" @input="saveInput"> -->
+      <!-- Misto toho aby se vzdy volala metoda saveInput a ta vkladala do data property aktualni napsanou hodnotu se zde muze pouzit ref ktery rika 
+      ze nekdy v budocunu budeme chtit pouzit hodnotu tohoto HTML elementu a potom se na ni muzeme odkazovat -->
+      <input type="text" ref="userText">
+      <!-- ref je mozne pridat na jakykoliv HTML element -->
+
+
+      <button @click="setText">Set Text</button>
+      <p>{{ message }}</p>
+    </section>
+    <!-- Template druhe app -->
+    <section id="app2">
+      <!-- Zde nemuzeme pouzit nic z app, jen z app2, protoze ty dve apps nejsou nijak propejene -->
+      <p>{{ favoriteMeal }}</p>
+    </section>
+
+    <section id="app3">
+
+    </section>
+  </body>
+</html>
